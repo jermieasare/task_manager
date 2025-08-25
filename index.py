@@ -196,3 +196,43 @@ def add_task(task):
     #save task to database
     #return response
     response= True
+
+
+import add
+import show
+import update
+import delete
+
+
+add_task_response= add.add_task("Study")
+print(add_task_response)
+
+show_task_response= show.show_tasks()
+print(show_task_response)
+
+update_task_response= update.update_task("Study", "Code")
+print(update_task_response)
+
+delete_task_response= delete.delete_task("Study")
+print(delete_task_response)
+
+
+
+class Chat:
+    def __init__( self, chatee, last_message, last_message_time):
+        self.chatee =chatee
+        self.last_message= last_message
+        self.last_message_time= last_message_time
+
+    def open(self):
+        return f"you just opened the chat with {self.chatee} with last message {self.last_message} that was sent at {self.last_message_time}"
+    
+
+    from oop import Chat
+
+chat_with_abena= Chat( "Abena Jollof", "Be guided!", "7:30 PM")
+chat_with_michael= Chat("Michael Hammond", "Extend the portofolio deadline", "5:56 AM")
+chat_with_0248653214= Chat("The Closer", "When are we ending the class","3:59 AM")
+
+
+print(chat_with_abena.open())
