@@ -1,6 +1,10 @@
-from oop import Chat
+import tkinter as tk
+import ui
 
-chat_with_abena= Chat() 
-#this will excute the __str__ attribute
-#runs anytime you're trying to print to the console(not compulsory but helps the code work better)
-print(chat_with_abena)
+app = tk.Tk()
+app.title("Task Manager")
+app.geometry("720x480")
+
+ui.show_all_tasks_frame(app)
+
+app.mainloop()
