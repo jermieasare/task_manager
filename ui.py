@@ -3,6 +3,17 @@ from tkinter import messagebox
 from functools import partial
 import commands
 
+# Handle update task and update the UI  
+def handle_update(id, title, app):
+    if not title:
+        messagebox.showerror(
+            title="Update Task",
+            message="Task title cannot be empty",
+            parent=app)
+    else:
+        commands.update_task(id, {"title": title})
+        show_all_tasks_frame(app)
+
 # handle delete task and update the UI
 def handle_delete(id, app):
     commands.delete_task(id)
@@ -18,6 +29,34 @@ def submit_task(title, app):
     else:
         commands.save_task({"title": title})
         show_all_tasks_frame(app)
+
+# Function to display the edit task frame
+def show_edit_task_frame(task, app):
+    frame= tk.Frame(master=app)
+    frame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    label=tk.Label(master=frame, text=f"Edit Task: {task['title']}")
+    label.grid()
+
+#Add an entry widget and show the task title
+    entry=tk.Entry(master=frame)
+    entry.insert(0,task["title"])
+    entry.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(5,10))
+
+#Add a button with text update for saving changes
+    update_btn=tk.Button(
+        master=frame,
+        text="Update",command=lambda: handle_update (task["_id"],entry.get(), app))
+    update_btn.grid(row=2, column=1)
+    
+#Add a button with text Back/Cancel for removing the frame
+    cancel_btn=tk.Button(
+        master=frame,
+        text="Back", 
+        command=lambda: frame.destroy())
+    cancel_btn.grid(row=2, column=0)
+
+    frame.tkraise()
 
 # Function to display the add task frame
 def show_add_task_frame(app):
@@ -54,7 +93,7 @@ def show_all_tasks_frame(app):
 # Create an edit button for each task
         edit_btn = tk.Button(
             master=frame,
-            text="Edit",)
+            text="Edit", command=partial(show_edit_task_frame, task,app))
         edit_btn.grid(row=tasks.index(task), column=1)
 
 #create a delete button for each task
